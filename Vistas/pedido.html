@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABM Pedido</title>
+    <link rel="stylesheet" href="../Vistas/pedido.css">
+</head>
+
+<body>
+    <header>
+        <h1>i2T - ABM Pedido</h1>
+    </header>
+    <main>
+        <section id="pedido-list">
+            <h2>Pedidos</h2>
+            <input type="search" id="search-input" placeholder="Buscar por semana">
+            <ul id="pedido-list-ul">
+            </ul>
+            <button id="agregar-pedido-btn">Agregar Pedido</button>
+        </section>
+        <section id="pedido-form" style="display: none;">
+            <h2>Alta de Pedido</h2>
+            <form id="pedido-form-form">
+                <label>Seleccione una semana:</label>
+                <div id="semanas-checkboxes">
+                    <label><input type="checkbox" name="semanas" value="1"> Semana 1</label><br>
+                    <label><input type="checkbox" name="semanas" value="2"> Semana 2</label><br>
+                    <label><input type="checkbox" name="semanas" value="3"> Semana 3</label><br>
+                    <label><input type="checkbox" name="semanas" value="4"> Semana 4</label>
+                </div>
+                </select>
+                <label for="id_comida">Seleccione un plato:</label>
+                <select id="id_comida" required>
+                    <option value="">Seleccione un Plato</option>
+                    <option value="1">Milanesa de pollo o carne sola o a la pizza</option>
+                    <option value="2">Pastel de carne y papas</option>
+                    <option value="3">Carne al horno</option>
+                    <option value="4">Pata muslo/Carne/Cerdo (puede venir cualquier variedad)</option>
+                    <option value="5">Pollo relleno + papa</option>
+                    <option value="6">Sandwich pollo o milanesa c/lechuga-tomate</option>
+                    <option value="7">Medallones de pollo</option>
+                    <option value="8">Arroz con pollo</option>
+                    <option value="9">Fideos o Ravioles con crema + medallon de pollo</option>
+                    <option value="10">Lasagna tradicional con jamon y queso</option>
+                    <option value="11">Empanada de pollo</option>
+                    <option value="12">Empanada de Carne</option>
+                    <option value="13">Empanada de Jamón y Queso</option>
+                    <option value="14">Empanada de Cebolla y Queso</option>
+                    <option value="15">Empanada de Verdura</option>
+                    <option value="16">Empanada de Choclo</option>
+                    <option value="17">Tarta de Verdura</option>
+                    <option value="18">Tarta de Calabaza</option>
+                    <option value="19">Tarta de Jamón y Queso</option>
+                    <option value="20">Pastel de Vegetales</option>
+                    <option value="21">Medallones de Verduras</option>
+                    <option value="22">Medallones de Lentejas</option>
+                    <option value="23">Milanesas de Berenjena</option>
+                    <option value="24">Medallones de Calabaza con queso gratinado</option>
+                    <option value="25">Sorrentinos de Calabaza</option>
+                    <option value="26">Canelones de Verdura</option>
+                </select>
+                <button type="submit">Agregar</button>
+                <button class="modificar-pedido-btn" style="display: none;">Modificar</button>
+            </form>
+        </section>
+    </main>
+    <script src="../Controlador/pedido.js"></script>
+</body>
+
+</html>

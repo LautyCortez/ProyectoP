@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../Vistas/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="logo"></div>
+        <form id="login-form">
+            <div class="input-group">
+                
+                <label for="username"></label>
+                <input type="text" id="username" placeholder="User" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password"></label>
+                <input type="password" id="password" placeholder="Password" name="password" required>
+            </div>
+            <button type="submit"><span>Login</span></button>
+            <div>
+                <p id="status-message" class="status-message"></p>
+            </div>
+            <a id="registro-link" href="../Vistas/registro.html">Registrarse</a>
+            <a id="olvido-link" href="../Vistas/olvido.html">Olvidé mi contraseña</a>
+        </form>
+        <p id="error-message" class="error-message"></p>
+        <div class="toggle-container">
+            <button id="AlternarMO">Alternar</button>
+        </div>
+    </div>
+    <script src="../Controlador/login.js"></script>
+    <script src="../Modelo/ServidorTP.json"></script>
+
+</body>
+
+</html>

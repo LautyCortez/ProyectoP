@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Vistas/menu.css">
+    <title>Visualizar Menú</title>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="../Vistas/login.html">Login</a></li>
+            <li><a href="../Vistas/menu.html">Menú</a></li>
+            <li><a href="../Vistas/pedido.html">Pedidos</a></li>
+            <li><a href="../Vistas/login.html">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    <div class="contenedor-menu">
+        <h2>Menú Disponible</h2>
+        <table id="tabla-menu">
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Semana 1</th>
+                    <th>Semana 2</th>
+                    <th>Semana 3</th>
+                    <th>Semana 4</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-menu-body">
+            </tbody>
+        </table>
+    </div>
+    <script src="../Controlador/menu.js"></script>
+</body>
+</html>

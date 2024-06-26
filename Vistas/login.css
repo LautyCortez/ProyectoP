@@ -1,0 +1,282 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #bbbbbb;
+}
+
+#AlternarMO {
+    padding: 7px 12px;
+    background-color: #2e2e2e;
+    color: transparent;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    content: flex;
+    white-space: nowrap;
+}
+
+#AlternarMO:hover {
+    color: #ffffff;
+    background-color: #303130;
+}
+
+.login-container {
+    background-color: #222222cc;
+    backdrop-filter: blur(1px);
+    padding: 50px;
+    border-radius: 7px;
+    box-shadow: 0 0 90px #0000001a;
+    transform: translateY(0);
+    transition: transform 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    background-image: url('../imagen/logo-i2t.jpg');
+    background-size: contain;
+    background-position: center;
+    height: 107px;
+    width: 177px;
+    margin: 0 auto 20px;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 10px #ff060661;
+}
+
+.login-container:active {
+    transform: translateY(-5px);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+}
+
+#username {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#username::placeholder {
+    color: #aaa;
+    transition: opacity 0.3s ease;
+}
+
+#username:focus::placeholder {
+    opacity: 0;
+}
+
+#password {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#password::placeholder {
+    color: #aaa;
+    transition: opacity 0.3s ease;
+}
+
+#password:focus::placeholder {
+    opacity: 0;
+}
+
+button {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #ff060661;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in;
+    z-index: 1;
+    cursor: pointer;
+}
+
+button::before,
+button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 100%;
+    transform: skew(17deg);
+    transition: all 0.5s;
+    overflow: hidden;
+    z-index: -1;
+}
+
+button span {
+    color: transparent;
+    transition: color 0.5s;
+}
+
+button:hover span {
+    color: #ffffffc1;
+}
+
+button::before {
+    left: -10px;
+    background: #030303;
+}
+
+button:hover {
+    background-color: #ff06063c;
+    border-color: #eaeaea61;
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 10px #0000007c;
+}
+
+button:hover::before,
+button:active::before {
+    width: 100%;
+    left: 0;
+}
+
+button:hover::after,
+button:active::after {
+    width: 100%;
+    right: 0;
+}
+
+.error-message {
+    color: #d14;
+    font-family: Georgia, serif;
+    font-size: 0.90rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 2px;
+    display: grid;
+}
+
+.status-message {
+    font-size: 16px;
+    color: #1eb226;
+    margin-top: 20px;
+}
+
+#registro-link {
+    margin-right: 20px;
+    font-size: 0.9em;
+    color: #f3f3f3;
+}
+
+#olvido-link {
+    font-size: 0.9em;
+    color: #f3f3f3;
+}
+
+#registro-link:hover,
+#olvido-link:hover {
+    color: #ff060661;
+    transition: color 0.7s ease;
+    transition: color 0.7s;
+
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.login-container {
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.login-container:active,
+.login-container:not(:active) {
+    transform: translateY(0);
+    box-shadow: 0 0 10px #a49b9b1a;
+}
+
+.login-container:active {
+    transform: translateY(-5px);
+    box-shadow: 0 0 90px #3737374d;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .login-container {
+    background-color: #b0b0b0e6;
+    box-shadow: 0 0 90px #00000080;
+}
+
+body.dark-mode .input-group input {
+    background-color: #333;
+    color: #ffffff;
+    border: 1px solid #555;
+}
+
+body.dark-mode .input-group input::placeholder {
+    color: #bbb;
+}
+
+body.dark-mode button {
+    border: 1px solid #b0b0b0e6;
+}
+
+body.dark-mode button:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+body.dark-mode button::before {
+    background: #b0b0b0e6;
+}
+
+body.dark-mode .error-message {
+    color: #ff060661;
+}
+
+body.dark-mode .status-message {
+    color: #017d01;
+}
+
+body.dark-mode #registro-link,
+body.dark-mode #olvido-link {
+    color: #ff060661;
+}
+
+body.dark-mode #registro-link:hover,
+body.dark-mode #olvido-link:hover {
+    color: #ffdf00;
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedor de Viandas</title>
+    <link rel="stylesheet" href="../Vistas/menu.css">
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .navbar li {
+        flex: 1;
+    }
+
+    .navbar a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        background-color: #575757;
+    }
+
+    #mensaje-bienvenida {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #ffeb3b;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 1000;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .contenedor-menu {
+        padding: 20px;
+    }
+
+    #tabla-menu {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #tabla-menu th,
+    #tabla-menu td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #tabla-menu th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Recuperar la información del usuario de localStorage
+        const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+
+        // Si hay un usuario almacenado, mostrar el mensaje de bienvenida
+        if (usuarioActual) {
+            const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
+            const nombre = usuarioActual.usuario_nombre;
+            const rol = usuarioActual.rol;
+
+            // Determinar el nombre del rol
+            let rolNombre;
+            switch (usuarioActual.id_rol) {
+                case 1:
+                    rolNombre = "Administrador";
+                    break;
+                case 2:
+                    rolNombre = "RRHH";
+                    break;
+                case 3:
+                    rolNombre = "Proveedor";
+                    break;
+                case 4:
+                    rolNombre = "Empleado de i2T";
+                    break;
+                default:
+                    rolNombre = "Usuario no registrado";
+            }
+
+            // Mostrar el mensaje de bienvenida
+            mensajeBienvenida.textContent = `¡Bienvenid@ ${nombre} - Iniciaste sesión como ${rolNombre}!`;
+
+            setTimeout(() => {
+                mensajeBienvenida.style.opacity = '0';
+                setTimeout(() => {
+                    mensajeBienvenida.style.display = 'none'; // Finalmente, oculta el mensaje
+                }, 500); // La segunda demora aquí es para esperar a que termine la animación de desvanecimiento
+            }, 3500); // Espera 5 segundos antes de iniciar la ocultación
+        }
+    });
+
+    async function obtenerUltimoIdComida() {
+        try {
+            const response = await fetch('http://localhost:3000/comida');
+            const comidas = await response.json();
+
+            if (comidas.length > 0) {
+                const ultimoIdComida = comidas[comidas.length - 1].id_comida;
+                return ultimoIdComida + 1;
+            } else {
+                return 1;
+            }
+        } catch (error) {
+            console.error('Error al obtener el último ID de comida:', error);
+            return null;
+        }
+    }
+
+    async function agregarPlato() {
+        try {
+            const nuevoIdComida = await obtenerUltimoIdComida();
+
+            if (nuevoIdComida === null) {
+                alert('Error al obtener el último ID de comida');
+                return;
+            }
+
+            const nuevoPlato = {
+                id_comida: nuevoIdComida,
+                nombre_comida: prompt('Ingrese el nombre del nuevo plato:')
+            };
+
+            const response = await fetch('http://localhost:3000/comida', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(nuevoPlato)
+            });
+
+            if (response.ok) {
+                alert('Plato agregado exitosamente');
+            } else {
+                alert('Error al agregar el plato');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al agregar el plato');
+        }
+    }
+
+
+    async function modificarPlato() {
+        try {
+            const idPlato = prompt('Ingrese el ID del plato a modificar:');
+            const nuevoNombre = prompt('Ingrese el nuevo nombre del plato:');
+
+            const response = await fetch(`http://localhost:3000/comida/${idPlato}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre_comida: nuevoNombre })
+            });
+
+            if (response.ok) {
+                alert('Plato modificado exitosamente');
+            } else {
+                alert('Error al modificar el plato');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al modificar el plato');
+        }
+    }
+
+    async function eliminarPlato() {
+        try {
+            const idPlato = prompt('Ingrese el ID del plato a eliminar:');
+
+            const response = await fetch(`http://localhost:3000/comida/${idPlato}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Plato eliminado exitosamente');
+            } else {
+                alert('Error al eliminar el plato');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al eliminar el plato');
+        }
+    }
+
+    async function gestionarDisponibilidad() {
+    try {
+        const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+
+        // Verificar que el usuario tenga el rol adecuado para gestionar la disponibilidad
+        const rolPermitido = [2, 3, 4]; // Solo RRHH, Proveedor de servicio de viandas y Empleado de i2T pueden gestionar
+
+        if (!usuarioActual || !rolPermitido.includes(usuarioActual.id_rol)) {
+            alert('Acceso no autorizado para gestionar disponibilidad');
+            return;
+        }
+
+        const idComida = prompt('Ingrese el ID del plato de comida:');
+        const semana = prompt('Ingrese la semana en la que estará disponible el plato (1, 2, 3 o 4):');
+
+        // Verificar que la semana ingresada sea válida (1, 2, 3 o 4)
+        if (![1, 2, 3, 4].includes(parseInt(semana))) {
+            alert('Semana inválida. Debe ser 1, 2, 3 o 4.');
+            return;
+        }
+
+        // Obtener el JSON de menu_semana desde el backend
+        const response = await fetch('http://localhost:3000/menu_semana');
+        const json = await response.json();
+        const menuSemana = json.menu_semana;
+
+        // Encontrar la semana correspondiente en el array menu_semana
+        const semanaEncontrada = menuSemana.find(item => item.id_semana === parseInt(semana));
+
+        if (!semanaEncontrada) {
+            alert(`No se encontró la semana ${semana} en el menú semanal.`);
+            return;
+        }
+
+        // Verificar si el plato ya está en la lista de comidas de esa semana
+        if (semanaEncontrada.comida.includes(idComida)) {
+            alert(`El plato con ID ${idComida} ya está en la semana ${semana}.`);
+            return;
+        }
+
+        // Agregar el id_comida a la lista de comidas de la semana encontrada
+        semanaEncontrada.comida.push(idComida);
+
+        // Actualizar el JSON con las semanas actualizadas
+        const updateResponse = await fetch(`http://localhost:3000/menu_semana/${semanaEncontrada.id_semana}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(semanaEncontrada)
+        });
+
+        if (updateResponse.ok) {
+            alert('Disponibilidad gestionada exitosamente');
+        } else {
+            alert('Error al gestionar la disponibilidad');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al gestionar la disponibilidad');
+    }
+}
+
+
+</script>
+
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="../Vistas/login.html">Login</a></li>
+            <li><a href="../Vistas/menu.html">Menú</a></li>
+            <li><a href="../Vistas/pedido.html">Pedidos</a></li>
+            <li><a href="../Vistas/login.html">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    <div id="mensaje-bienvenida" class="mensaje-bienvenida"></div>
+    <div class="contenedor-menu">
+        <h2>Gestión de Menú</h2>
+        <table id="tabla-menu">
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Semana 1</th>
+                    <th>Semana 2</th>
+                    <th>Semana 3</th>
+                    <th>Semana 4</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-menu-body">
+                <!-- Aquí irán las filas de datos -->
+            </tbody>
+        </table>
+        <button onclick="agregarPlato()">Agregar Plato</button>
+        <button onclick="modificarPlato()">Modificar Plato</button>
+        <button onclick="eliminarPlato()">Eliminar Plato</button>
+        <button onclick="gestionarDisponibilidad()">Gestionar Disponibilidad</button>
+    </div>
+    <script src="../Controlador/menu.js"></script>
+</body>
+
+</html>

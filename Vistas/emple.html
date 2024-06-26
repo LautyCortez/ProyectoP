@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleado i2t</title>
+    <link rel="stylesheet" href="../Vistas/menu.css">
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .navbar li {
+        flex: 1;
+    }
+
+    .navbar a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        background-color: #575757;
+    }
+
+    #mensaje-bienvenida {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #ffeb3b;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 1000;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .contenedor-menu {
+        padding: 20px;
+    }
+
+    #tabla-menu {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #tabla-menu th, #tabla-menu td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #tabla-menu th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Recuperar la información del usuario de localStorage
+        const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+
+        // Si hay un usuario almacenado, mostrar el mensaje de bienvenida
+        if (usuarioActual) {
+            const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
+            const nombre = usuarioActual.usuario_nombre;
+            const rol = usuarioActual.rol;
+
+            // Determinar el nombre del rol
+            let rolNombre;
+            switch (usuarioActual.id_rol) {
+                case 1:
+                    rolNombre = "Administrador";
+                    break;
+                case 2:
+                    rolNombre = "RRHH";
+                    break;
+                case 3:
+                    rolNombre = "Proveedor";
+                    break;
+                case 4:
+                    rolNombre = "Empleado de i2T";
+                    break;
+                default:
+                    rolNombre = "Usuario no registrado";
+            }
+
+            // Mostrar el mensaje de bienvenida
+            mensajeBienvenida.textContent = `¡Bienvenid@ ${nombre} - Iniciaste sesión como ${rolNombre}!`;
+
+            setTimeout(() => {
+                mensajeBienvenida.style.opacity = '0';
+                setTimeout(() => {
+                    mensajeBienvenida.style.display = 'none'; // Finalmente, oculta el mensaje
+                }, 500); // La segunda demora aquí es para esperar a que termine la animación de desvanecimiento
+            }, 3500); // Espera 5 segundos antes de iniciar la ocultación
+        }
+
+        // Habilitar o deshabilitar el botón de agregar pedido según el día de la semana
+        const agregarPedidoBtn = document.getElementById('agregar-pedido-btn');
+        const today = new Date().getDay();
+        if (today === 5 || today === 6 || today === 0) {
+            agregarPedidoBtn.disabled = false;
+        } else {
+            agregarPedidoBtn.disabled = true;
+        }
+    });
+</script>
+
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="../Vistas/login.html">Login</a></li>
+            <li><a href="../Vistas/menu.html">Menú</a></li>
+            <li><a href="../Vistas/pedido.html">Pedidos</a></li>
+            <li><a href="../Vistas/login.html">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    <div id="mensaje-bienvenida" class="mensaje-bienvenida"></div>
+    <div class="contenedor-menu">
+        <h2>Menú Disponible</h2>
+        <table id="tabla-menu">
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Semana 1</th>
+                    <th>Semana 2</th>
+                    <th>Semana 3</th>
+                    <th>Semana 4</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-menu-body">
+                <!-- Aquí irán las filas de datos -->
+            </tbody>
+        </table>
+        <button id="agregar-pedido-btn">Agregar Pedido</button>
+    </div>
+    <script src="../Controlador/menu.js"></script>
+</body>
+
+</html>
